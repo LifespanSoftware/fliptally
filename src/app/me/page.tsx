@@ -20,6 +20,7 @@ export default function MePage() {
         </section>
 
         <nav className="mt-4 overflow-hidden rounded-2xl border border-border bg-surface">
+          <MenuLink href="/help" label="Help · How FlipTally works" />
           <MenuLink href="/api/sales/export" label="Export all sales (CSV)" download />
           <MenuLink href="/changelog" label="What's new · Changelog" />
           <MenuLink href="/changelog#hmrc" label="How HMRC reporting works" />

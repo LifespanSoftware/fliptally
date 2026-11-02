@@ -16,6 +16,7 @@ export default function BottomNav() {
   const hidden =
     pathname.startsWith("/sales/") ||
     pathname.startsWith("/changelog") ||
+    pathname.startsWith("/help") ||
     pathname.startsWith("/login");
   if (hidden) return null;
 

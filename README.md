@@ -9,6 +9,33 @@ where you stand with HMRC's reporting thresholds before you reach them.
 FlipTally gives general guidance, not tax advice, and isn't affiliated with Vinted, eBay,
 Depop or HMRC.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <img src="public/screenshots/home.png" width="100%" alt="Home screen with the HMRC reporting check, profit this tax year and recent sales" />
+      <br /><sub>Home</sub>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/screenshots/add-sale.png" width="100%" alt="Add a sale form with live profit calculation" />
+      <br /><sub>Add a sale</sub>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/screenshots/sales.png" width="100%" alt="Sales list with search and filters" />
+      <br /><sub>Sales</sub>
+    </td>
+    <td align="center" width="25%">
+      <img src="public/screenshots/tax-year.png" width="100%" alt="Tax year summary with the trading allowance" />
+      <br /><sub>Tax year</sub>
+    </td>
+  </tr>
+</table>
+
+In-app, the **Me → Help** tab walks through every screen with the same screenshots — see
+[`src/app/help/page.tsx`](./src/app/help/page.tsx) or visit `/help` once the app is
+running.
+
 ## Stack
 
 - [Next.js 16](https://nextjs.org) (App Router, TypeScript, Tailwind CSS v4)
