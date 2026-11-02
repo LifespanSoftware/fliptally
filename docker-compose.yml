@@ -1,0 +1,25 @@
+# Used for local Docker testing and as a reference for Dokploy's
+# "Docker Compose" application type. For Dokploy's "Dockerfile" application
+# type, point it at the Dockerfile directly instead and set DATABASE_URL /
+# FLIPTALLY_PASSCODE as environment variables with a /data volume mount.
+services:
+  fliptally:
+    build: .
+    image: fliptally:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "file:/data/fliptally.db"
+      FLIPTALLY_PASSCODE: "${FLIPTALLY_PASSCODE:-}"
+    volumes:
+      - fliptally_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/sales"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  fliptally_data:

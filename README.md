@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlipTally
 
-## Getting Started
+Track your sales, costs and profit on Vinted, eBay, Depop and similar sites — and see
+where you stand with HMRC's reporting thresholds before you reach them.
 
-First, run the development server:
+**v0.0.0-beta** · designed by [Lifespan Software](https://lifespansoftware.com) · see
+[`CHANGELOG.md`](./CHANGELOG.md) or `/changelog` in the app.
+
+FlipTally gives general guidance, not tax advice, and isn't affiliated with Vinted, eBay,
+Depop or HMRC.
+
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, TypeScript, Tailwind CSS v4)
+- [Prisma](https://www.prisma.io) + SQLite — single-file database, no external DB needed
+- `pdfkit` / `csv-parse` / `csv-stringify` for tax-year exports and CSV import
+
+It's a single-user, self-hosted app: your data lives in one SQLite file on disk (or on a
+Docker volume), with no third-party accounts required.
+
+## Local development
 
 ```bash
+npm install
+cp .env.example .env
+npx prisma migrate dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable             | Required | Description                                                                 |
+| --------------------- | -------- | ---------------------------------------------------------------------------- |
+| `DATABASE_URL`        | yes      | SQLite connection string, e.g. `file:./dev.db` or `file:/data/fliptally.db` |
+| `FLIPTALLY_PASSCODE`  | no       | If set, gates the whole app behind a single shared passcode screen.         |
 
-## Learn More
+## Deploying
 
-To learn more about Next.js, take a look at the following resources:
+### Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker build -t fliptally .
+docker run -d \
+  --name fliptally \
+  -p 3000:3000 \
+  -e FLIPTALLY_PASSCODE=changeme \
+  -v fliptally_data:/data \
+  fliptally
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The container applies pending Prisma migrations on startup, then serves the app on port
+`3000`. The SQLite database lives at `/data/fliptally.db` — mount a volume there so data
+survives redeploys.
 
-## Deploy on Vercel
+`docker-compose.yml` wraps the same thing for local testing:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+FLIPTALLY_PASSCODE=changeme docker compose up --build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Dokploy
+
+1. Push this repo to GitHub, then in Dokploy create a new **Application** pointing at it.
+2. **Build type:** `Dockerfile` (the repo's `Dockerfile` handles build + runtime; no
+   extra build command needed). Alternatively use the **Docker Compose** build type and
+   point it at `docker-compose.yml`.
+3. **Port:** container port `3000`.
+4. **Volume / Mount:** add a persistent mount at `/data` (this is where the SQLite
+   database file lives — without it, data is lost on every redeploy).
+5. **Environment variables:**
+   - `DATABASE_URL=file:/data/fliptally.db`
+   - `FLIPTALLY_PASSCODE=<your chosen passcode>` (optional, omit to leave the app open)
+6. Deploy. On first boot the entrypoint runs `prisma migrate deploy` to create the
+   database and tables automatically — no manual migration step needed.
+7. Attach a domain in Dokploy and enable HTTPS as usual.
+
+## Importing existing sales
+
+The **Sales** tab has an **Import CSV** button. It accepts FlipTally's own export format
+and best-effort-matches common column names (`Item`, `Platform`, `Sold for`, `Paid`,
+`Postage & fees`, `Date sold`, …), so a spreadsheet of past sales can usually be dropped
+in with only minor tidying.
+
+## Project structure
+
+```
+src/app/            Pages (App Router) and API routes
+src/components/      Shared UI (bottom nav, sale rows, badges, progress bars)
+src/lib/             Business logic: HMRC thresholds, trading allowance, CSV, dates
+prisma/schema.prisma Database schema (SQLite)
+```

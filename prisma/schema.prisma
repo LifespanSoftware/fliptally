@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite has no native enum type, so Platform ("VINTED" | "EBAY" | "DEPOP" | "OTHER")
+// and Reason ("RESALE" | "CLEAR_OUT") are validated in application code — see src/lib/types.ts.
+model Sale {
+  id          String   @id @default(cuid())
+  itemName    String
+  platform    String
+  reason      String
+  soldFor     Float
+  paidFor     Float
+  fees        Float    @default(0)
+  dateSold    DateTime
+  photoUrl    String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([dateSold])
+  @@index([platform])
+}
+
+model Settings {
+  id            Int      @id @default(1)
+  displayName   String?
+  reportingYear Int?
+  updatedAt     DateTime @updatedAt
+}
