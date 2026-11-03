@@ -30,6 +30,28 @@ export default function ChangelogPage() {
 
       <section className="mt-6 rounded-2xl border border-border bg-surface p-5">
         <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-accent-light px-3 py-1 text-xs font-bold text-accent">
+            Unreleased
+          </span>
+        </div>
+        <h2 className="mt-3 text-lg font-bold">Installable, works offline</h2>
+        <p className="mt-1 text-sm leading-relaxed text-muted">
+          FlipTally can now be added to your home screen and keeps the app shell working
+          without a connection.
+        </p>
+
+        <ChangeList
+          title="Added"
+          items={[
+            "Installable as a home-screen app, with a generated icon and app manifest.",
+            "Offline app shell — pages you've visited still open without a connection, with a dedicated offline screen as a fallback. Adding or editing sales still needs a connection.",
+            "A Me → Help tab with a screenshot-led tour of every screen.",
+          ]}
+        />
+      </section>
+
+      <section className="mt-5 rounded-2xl border border-border bg-surface p-5">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-bold text-brand-dark">
             v0.0.0-beta
           </span>

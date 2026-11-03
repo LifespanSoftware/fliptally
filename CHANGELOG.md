@@ -5,6 +5,19 @@ All notable changes to FlipTally are documented here. FlipTally is designed and 
 
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+- **Installable app** — a web app manifest (`src/app/manifest.ts`) with generated brand
+  icons, so FlipTally can be added to a phone or desktop home screen.
+- **Offline app shell** — a lightweight service worker (`public/sw.js`) caches visited
+  pages and static assets so the app still opens without a connection, falling back to a
+  dedicated `/offline` screen. Sales data always requires a live connection; this isn't
+  offline editing.
+- **Me → Help** tab with a screenshot-led tour of every screen, and a README screenshots
+  section.
+
 ## [0.0.0-beta] — 2026-11-02
 
 First beta build of FlipTally — a profit and HMRC-threshold tracker for people selling on

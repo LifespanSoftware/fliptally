@@ -17,7 +17,8 @@ export default function BottomNav() {
     pathname.startsWith("/sales/") ||
     pathname.startsWith("/changelog") ||
     pathname.startsWith("/help") ||
-    pathname.startsWith("/login");
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/offline");
   if (hidden) return null;
 
   return (

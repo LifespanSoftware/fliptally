@@ -46,6 +46,27 @@ running.
 It's a single-user, self-hosted app: your data lives in one SQLite file on disk (or on a
 Docker volume), with no third-party accounts required.
 
+## Installable / offline support
+
+FlipTally is an installable Progressive Web App:
+
+- **Favicon & app icons** — generated at build time (`src/app/icon.tsx`,
+  `apple-icon.tsx`, `icon-192/route.tsx`, `icon-512/route.tsx`) from the same brand mark,
+  so there's nothing to regenerate by hand when the design changes.
+- **Add to Home Screen** — `src/app/manifest.ts` provides the web app manifest (name,
+  theme colours, icons, shortcuts to "Add a sale" and "Sales"). Visiting the app in Chrome
+  or Safari over HTTPS offers an install prompt; on iOS, use Share → Add to Home Screen.
+- **Offline app shell** — `public/sw.js` is a small hand-rolled service worker (no extra
+  build tooling): it network-first caches pages you've visited so they still open when
+  you lose signal, cache-first-with-revalidate for static `_next` assets, and always goes
+  to the network for `/api/*` so sales data is never served stale. If a page was never
+  cached, it falls back to `/offline`.
+- This **does not** include offline editing — adding or changing a sale still needs a
+  connection (see `ROADMAP.md`). Offline support here means the app shell and
+  previously-viewed pages keep working, not an offline-first data layer.
+- The service worker only registers in production builds (`npm run start` / the Docker
+  image), not `npm run dev`, to avoid caching interfering with hot reload.
+
 ## Local development
 
 ```bash
