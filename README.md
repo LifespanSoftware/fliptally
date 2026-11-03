@@ -4,7 +4,8 @@ Track your sales, costs and profit on Vinted, eBay, Depop and similar sites — 
 where you stand with HMRC's reporting thresholds before you reach them.
 
 **v0.0.0-beta** · designed by [Lifespan Software](https://lifespansoftware.com) · see
-[`CHANGELOG.md`](./CHANGELOG.md) or `/changelog` in the app.
+[`CHANGELOG.md`](./CHANGELOG.md) or `/changelog` in the app, and
+[`ROADMAP.md`](./ROADMAP.md) for what's planned next.
 
 FlipTally gives general guidance, not tax advice, and isn't affiliated with Vinted, eBay,
 Depop or HMRC.
