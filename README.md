@@ -10,6 +10,21 @@ where you stand with HMRC's reporting thresholds before you reach them.
 FlipTally gives general guidance, not tax advice, and isn't affiliated with Vinted, eBay,
 Depop or HMRC.
 
+## Usage
+
+FlipTally is a single-user, self-hosted app: run your own instance (see
+[Local development](#local-development) or [Deploying](#deploying) below), add your sales as
+you go, and use the home and tax-year screens to see where you stand against HMRC's
+reporting thresholds. It's for your own record-keeping and general guidance — not tax
+advice — and you're responsible for your own data and any tax filings. See the in-app
+**Me → Terms of use & licence** page (or `/terms`) for the full terms.
+
+## Licence
+
+Copyright © Lifespan Software. All rights reserved — see [`LICENSE`](./LICENSE). FlipTally's
+source code is proprietary; it isn't open source and may not be copied, modified or
+redistributed without prior written permission.
+
 ## Screenshots
 
 <table>

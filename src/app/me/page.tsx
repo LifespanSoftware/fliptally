@@ -24,7 +24,8 @@ export default function MePage() {
           <MenuLink href="/api/sales/export" label="Export all sales (CSV)" download />
           <MenuLink href="/changelog" label="What's new · Changelog" />
           <MenuLink href="/changelog#hmrc" label="How HMRC reporting works" />
-          <MenuLink href="https://www.gov.uk/guidance/selling-online-and-paying-taxes-income-tax" label="HMRC guidance (gov.uk)" external last />
+          <MenuLink href="https://www.gov.uk/guidance/selling-online-and-paying-taxes-income-tax" label="HMRC guidance (gov.uk)" external />
+          <MenuLink href="/terms" label="Terms of use & licence" last />
         </nav>
 
         <section className="mt-4 rounded-2xl border border-border bg-surface p-4 text-sm leading-relaxed text-muted">
